@@ -14,6 +14,7 @@ import java.nio.ByteBuffer;
  * flip() → prepare buffer for reading after writing
  * clear() → prepare buffer for writing again (does not erase data)
  * rewind() → reset position for re-reading
+ * limit() -> what does it do ?
  *
  *
  * A ByteBuffer internally has:
@@ -35,6 +36,19 @@ import java.nio.ByteBuffer;
  */
 public class ByteBufferBasics {
     public static void main(String[] args) {
+
+
+        ByteBuffer b = ByteBuffer.allocate(4);
+        b.put((byte) 10);
+        b.put((byte) 20);
+        System.out.println(b.get() + " what happens with get");
+
+        ByteBuffer bb = ByteBuffer.allocate(2);
+        bb.putChar('A');
+
+        System.out.println(bb.limit() + " , " + bb.position() + " , " +  bb.capacity());
+
+
         ByteBuffer buffer = ByteBuffer.allocate(2);
 
         buffer.put((byte)65); // 'A'
