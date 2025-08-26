@@ -17,7 +17,7 @@ public class BlockingEchoServer {
                 Socket clientSocket = serverSocket.accept(); // Blocking until a client connects
                 System.out.println("Client connected: " + clientSocket.getInetAddress());
 
-//                handleClient(clientSocket);
+                handleClient(clientSocket);
 
                 // In Multi-threaded EchoServer we just create new thread for each client
                 /**
@@ -28,8 +28,8 @@ public class BlockingEchoServer {
                  *
                  */
 
-                Thread handler = new Thread(() -> handleClient(clientSocket));
-                handler.start();
+//                Thread handler = new Thread(() -> handleClient(clientSocket));
+//                handler.start();
             }
         }
     }

@@ -53,4 +53,7 @@
   the OS stores the connection in the backlog till the application is ready to operate on them, but there's a limit
   to this backlog, the OS TCP stack on server side queued those incoming TCP SYN packets (a kernel level queue)
 - Once server does `accpet()` it returns a socket and the tcp handshake is complete.
-- In my testing with a multithreaded server, i was able to open around 4K connections on mac M2 with 16G ram 
+- In my testing with a multithreaded server, i was able to open around 4K connections on mac M2 with 16G ram
+
+- Client connect() ---> TCP SYN ---> [Kernel accept backlog] ---> Java Thread accept()
+  (not called yet in single-threaded server)
