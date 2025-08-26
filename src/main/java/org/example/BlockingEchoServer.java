@@ -1,0 +1,48 @@
+package org.example;
+
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket; // java net socket
+
+public class BlockingEchoServer {
+
+    public static void main(String[] args) throws IOException {
+        String host = "localhost";
+        int port = 9090;
+
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            System.out.println("Echo Server started, listening on port " + port);
+
+            while (true) {
+                Socket clientSocket = serverSocket.accept(); // Blocking until a client connects
+                System.out.println("Client connected: " + clientSocket.getInetAddress());
+
+                handleClient(clientSocket);
+            }
+        }
+    }
+
+    private static void handleClient(Socket clientSocket) throws IOException {
+        try (
+            InputStream in = clientSocket.getInputStream();
+            OutputStream out = clientSocket.getOutputStream();
+            BufferedReader clientSocketReader = new BufferedReader(new InputStreamReader(in));
+            PrintWriter writer = new PrintWriter(out, true);
+        ) {
+            String line;
+            while ((line = clientSocketReader.readLine()) != null ) { // Blocking until a line arrives
+                System.out.println("Received : "+ line);
+                writer.println("Echo: " + line); // Send back the same message
+            }
+
+        } catch (IOException e) {
+            System.err.println("Client error: " + e.getMessage());
+        } finally {
+            try {
+                clientSocket.close();
+            } catch (IOException ignored) {
+                System.out.println("Client disconnected");
+            }
+        }
+    }
+}
