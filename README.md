@@ -188,4 +188,26 @@ Eg6:
 
 ![Screenshot 2025-08-27 at 3.21.23 AM.png](../../../../../../var/folders/nx/p0_6rh9j1x3_bnq03snm7j7r0000gn/T/TemporaryItems/NSIRD_screencaptureui_PDlgzp/Screenshot%202025-08-27%20at%203.21.23%E2%80%AFAM.png)
 
+Key mental shift : 
 
+
+```
+
+loop {
+    read();
+    process();
+    write();
+}
+
+```
+
+``` 
+loop {
+    selector.select();
+    for (each ready key) {
+        if (ready to read) read into buffer, switch to write mode;
+        if (ready to write) write from buffer, switch to read mode;
+    }
+}
+
+```
