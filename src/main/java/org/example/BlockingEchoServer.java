@@ -21,8 +21,11 @@ public class BlockingEchoServer {
 
                 // In Multi-threaded EchoServer we just create new thread for each client
                 /**
+                 * Each thread uses 1MB of stack can be configurable via -Xss
+                 * if there is 1000 clients then this can mean heavy context switching
                  * Thread handler = new Thread(() -> handleClient(clientSocket));
                  * handler.start();
+                 *
                  */
             }
         }
