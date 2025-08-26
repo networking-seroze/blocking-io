@@ -45,5 +45,12 @@
     15. Formatting/printing: PrintWriter 
 
     
-
-
+    
+### What happens when you try to 1000 connections sequentially
+- In mac you will see failure at 51st connection because mac only allows 50 connections in the listen backloc queue
+- On server side i only saw that one client is connected.
+- I thought server only accepts a connection if i call ServerSocket.accept() but it's not true
+  the OS stores the connection in the backlog till the application is ready to operate on them, but there's a limit
+  to this backlog, the OS TCP stack on server side queued those incoming TCP SYN packets (a kernel level queue)
+- Once server does `accpet()` it returns a socket and the tcp handshake is complete.
+- In my testing with a multithreaded server, i was able to open around 4K connections on mac M2 with 16G ram 

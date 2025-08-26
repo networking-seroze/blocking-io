@@ -6,9 +6,9 @@ import java.net.Socket; // java net socket
 
 public class BlockingEchoServer {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, RuntimeException {
         String host = "localhost";
-        int port = 9090;
+        int port = 9091;
 
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             System.out.println("Echo Server started, listening on port " + port);
@@ -17,7 +17,7 @@ public class BlockingEchoServer {
                 Socket clientSocket = serverSocket.accept(); // Blocking until a client connects
                 System.out.println("Client connected: " + clientSocket.getInetAddress());
 
-                handleClient(clientSocket);
+//                handleClient(clientSocket);
 
                 // In Multi-threaded EchoServer we just create new thread for each client
                 /**
@@ -27,11 +27,14 @@ public class BlockingEchoServer {
                  * handler.start();
                  *
                  */
+
+                Thread handler = new Thread(() -> handleClient(clientSocket));
+                handler.start();
             }
         }
     }
 
-    private static void handleClient(Socket clientSocket) throws IOException {
+    private static void handleClient(Socket clientSocket) {
         try (
             InputStream in = clientSocket.getInputStream();
             OutputStream out = clientSocket.getOutputStream();
